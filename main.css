@@ -1,13 +1,13 @@
 .mainCanvasColor {
    position: relative;
-   width: min(70vh, 95vw);
-   height: min(70vh, 95vw);
+   width: min(70vh, 90vw);
+   height: min(70vh, 90vw);
    background-color: darkgreen;
    border: solid 5px black;
 }
 
 .allCenter{
-   width: min(70vh, 95vw);
+   width: min(70vh, 90vw);
    margin-left: auto;
    margin-right: auto;
 }

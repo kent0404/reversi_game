@@ -7,26 +7,25 @@ $(document).ready(function () {
   paper.setup(document.getElementById('mainCanvas'));
   const para1 = document.getElementsByTagName('p')[0];
   const para2 = document.getElementsByTagName('p')[1];
-  
+
   const cell数 = 8;
-  const length = mainCanvas.width;
-  console.log(mainCanvas)
+  const length = Number(mainCanvas.style.width.substr(0, mainCanvas.style.width.length - 2));
   const cellSize = length / cell数;
   const small = Math.floor((cell数 - 1) / 2);
   const large = Math.ceil((cell数 - 1) / 2);
-  
+
   let around = [[1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1]];
   let result_list = [];
   let stones = [];
   let turn = 4;
-  
+
   function drawLine(startX, startY, endX, endY, color) {
     let myPath = new Path();
     myPath.add(new Point(startX, startY), new Point(endX, endY));
     myPath.strokeColor = color;
     paper.view.draw();
   }
-  
+
   function drawRectangle(startX, startY, endX, endY, color) {
     let myPath = new Path();
     myPath = Shape.Rectangle(startX, startY, endX, endY);
@@ -146,13 +145,13 @@ $(document).ready(function () {
   }
 
   toryo = function () {
-      if ( confirm("投了しますか？")){
-        finish(true);
-      }else{
+    if (confirm("投了しますか？")) {
+      finish(true);
+    } else {
 
-      }
-    
-  
+    }
+
+
   }
 
   function finish(toryo) {
@@ -172,7 +171,7 @@ $(document).ready(function () {
         result_list.push(whiteCounter)
         result_list.push(brackCounter)
         result_list.push('黒の投了により白の勝ち！');
-      }else{
+      } else {
         result_list.push(brackCounter)
         result_list.push(whiteCounter)
         result_list.push('白の投了により黒の勝ち！')
@@ -207,9 +206,19 @@ $(document).ready(function () {
   drawCell(small, large, 'brack', cellSize, 'green');
   drawCell(large, small, 'brack', cellSize, 'green');
 
+  drawLine(0, 1 * cellSize, length, 43, 'brack');
+  drawLine(0, 2 * cellSize, length, 86, 'brack');
+  drawLine(0, 3 * cellSize, length, 3 * cellSize, 'brack');
+  drawLine(0, 4 * cellSize, length, 4 * cellSize, 'brack');
+  drawLine(0, 5 * cellSize, length, 5 * cellSize, 'brack');
+  drawLine(0, 6 * cellSize, length, 6 * cellSize, 'brack');
+  drawLine(0, 7 * cellSize, length, 7 * cellSize, 'brack');
+  drawLine(0, 8 * cellSize, length, 8 * cellSize, 'brack');
+
+
   for (let i = 1; i < cell数; i++) {
     drawLine(i * cellSize, 0, i * cellSize, length, 'brack');
-    drawLine(0, i * cellSize, length, i * cellSize, 'brack');
+    // drawLine(0, i * cellSize, length, i * cellSize, 'brack');
   }
 
   let tool;
