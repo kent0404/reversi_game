@@ -9,7 +9,10 @@ $(document).ready(function () {
   const para2 = document.getElementsByTagName('p')[1];
 
   const cell数 = 8;
-  const length = Number(mainCanvas.style.width.substr(0, mainCanvas.style.width.length - 2));
+  let length = Number(mainCanvas.style.width.substr(0, mainCanvas.style.width.length - 2));
+  if (length === 0){
+    length = Number(mainCanvas.width);
+  }
   const cellSize = length / cell数;
   const small = Math.floor((cell数 - 1) / 2);
   const large = Math.ceil((cell数 - 1) / 2);
