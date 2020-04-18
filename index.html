@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>リバーシゲーム</title>
+  <link rel="stylesheet" href="main.css">
+  <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.10.2/paper-full.min.js"></script>
+  <script type="text/javascript" src="main.js"></script>
+</head>
+
+<body>
+  <div class="allCenter">
+    <h1 class="textCenter">
+      リバーシゲーム
+    </h1>
+    <p class="textCenter">
+      クリックで石を置く
+    </p>
+    <div class="textCenter">
+      <p class="p1">
+        手番：先手（黒）
+      </p>
+      <input type="button" class="buttonRight" value="パス" onclick="pass()">
+      <input type="button" class="buttonRight" value="投了" onclick="toryo()">
+    </div>
+    <canvas class="mainCanvasColor" id="mainCanvas"></canvas>
+  </div>
+</body>
+</html>

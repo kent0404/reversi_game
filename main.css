@@ -1,0 +1,24 @@
+.mainCanvasColor {
+   position: relative;
+   width: min(70vh, 95vw);
+   height: min(70vh, 95vw);
+   background-color: darkgreen;
+   border: solid 5px black;
+}
+
+.allCenter{
+   width: min(70vh, 95vw);
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.textCenter{
+   text-align: center;
+}
+.buttonRight{
+   margin: 0px 0px 1vh 3vw;
+}
+.p1{
+   display: inline;
+   margin: 0px 4vw 0px 0px;
+}
