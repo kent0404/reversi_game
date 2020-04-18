@@ -206,19 +206,9 @@ $(document).ready(function () {
   drawCell(small, large, 'brack', cellSize, 'green');
   drawCell(large, small, 'brack', cellSize, 'green');
 
-  drawLine(0, 1 * cellSize, length, 43, 'brack');
-  drawLine(0, 2 * cellSize, length, 86, 'brack');
-  drawLine(0, 3 * cellSize, length, 3 * cellSize, 'brack');
-  drawLine(0, 4 * cellSize, length, 4 * cellSize, 'brack');
-  drawLine(0, 5 * cellSize, length, 5 * cellSize, 'brack');
-  drawLine(0, 6 * cellSize, length, 6 * cellSize, 'brack');
-  drawLine(0, 7 * cellSize, length, 7 * cellSize, 'brack');
-  drawLine(0, 8 * cellSize, length, 8 * cellSize, 'brack');
-
-
   for (let i = 1; i < cell数; i++) {
     drawLine(i * cellSize, 0, i * cellSize, length, 'brack');
-    // drawLine(0, i * cellSize, length, i * cellSize, 'brack');
+    drawLine(0, i * cellSize, length, i * cellSize, 'brack');
   }
 
   let tool;
