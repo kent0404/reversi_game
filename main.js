@@ -23,6 +23,7 @@ $(document).ready(function () {
   let result_list = [];
   let stones = [];
   let turn = 4;
+  let passCounter = 0;
 
   function drawLine(startX, startY, sizeX, sizeY, color) {
     let myPath = new Path();
@@ -139,6 +140,7 @@ $(document).ready(function () {
   }
 
   highlight = function () {
+    passCounter = 0;
     if(confirm("置ける場所を表示しますか？")){
       for (let i = 0; i < cell数; i++) {
         for (let j = 0; j < cell数; j++) {
@@ -158,13 +160,16 @@ $(document).ready(function () {
     }
     drawReversiline();
     highlight_list = [];
+    passCounter = 0;
   }
 
   pass = function () {
     for (let i = 0; i < cell数; i++) {
       for (let j = 0; j < cell数; j++) {
         if (check(j, i)) {
+          passCounter++;
           alert('パスできません');
+          highlight();
           return;
         }
       }
@@ -262,8 +267,13 @@ $(document).ready(function () {
       } else {
         turn++;
       }
-    } else {
+    }else{
       alert('置けません');
+      passCounter++;
+      if (passCounter>=2){
+        highlight();
+      }  
     }
+    
   }
 });
