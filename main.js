@@ -24,9 +24,9 @@ $(document).ready(function () {
   let stones = [];
   let turn = 4;
 
-  function drawLine(startX, startY, endX, endY, color) {
+  function drawLine(startX, startY, sizeX, sizeY, color) {
     let myPath = new Path();
-    myPath.add(new Point(startX, startY), new Point(endX, endY));
+    myPath.add(new Point(startX, startY), new Point(sizeX, sizeY));
     myPath.strokeColor = color;
     paper.view.draw();
   }
@@ -139,15 +139,17 @@ $(document).ready(function () {
   }
 
   highlight = function () {
-    for (let i = 0; i < cell数; i++) {
-      for (let j = 0; j < cell数; j++) {
-        if (check(j, i)) {
-          drawRectangle(j * cellSize, i * cellSize, cellSize, cellSize, 'rgb(0,150,0)');
-          highlight_list.push([j, i]);
+    if(confirm("置ける場所を表示しますか？")){
+      for (let i = 0; i < cell数; i++) {
+        for (let j = 0; j < cell数; j++) {
+          if (check(j, i)) {
+            drawRectangle(j * cellSize, i * cellSize, cellSize, cellSize, 'rgb(0,150,0)');
+            highlight_list.push([j, i]);
+          }
         }
       }
+      drawReversiline();
     }
-    drawReversiline();
   }
 
   function highlight_非表示() {
