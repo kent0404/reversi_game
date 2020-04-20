@@ -1,5 +1,6 @@
 let pass = function () { };
 let toryo = function () { };
+let highlight = function () { };
 
 $(document).ready(function () {
   'use strict';
@@ -10,7 +11,7 @@ $(document).ready(function () {
 
   const cell数 = 8;
   let length = Number(mainCanvas.style.width.substr(0, mainCanvas.style.width.length - 2));
-  if (length === 0){
+  if (length === 0) {
     length = Number(mainCanvas.width);
   }
   const cellSize = length / cell数;
@@ -18,6 +19,7 @@ $(document).ready(function () {
   const large = Math.ceil((cell数 - 1) / 2);
 
   let around = [[1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1]];
+  let highlight_list = [];
   let result_list = [];
   let stones = [];
   let turn = 4;
@@ -27,6 +29,13 @@ $(document).ready(function () {
     myPath.add(new Point(startX, startY), new Point(endX, endY));
     myPath.strokeColor = color;
     paper.view.draw();
+  }
+
+  function drawReversiline() {
+    for (let i = 1; i < cell数; i++) {
+      drawLine(i * cellSize, 0, i * cellSize, length, 'black');
+      drawLine(0, i * cellSize, length, i * cellSize, 'black');
+    }
   }
 
   function drawRectangle(startX, startY, endX, endY, color) {
@@ -39,10 +48,10 @@ $(document).ready(function () {
   function drawCell(X, Y, cellNumber, cellSize, ) {
     let myPath;
     switch (cellNumber) {
-      case 'brack':
+      case 'black':
         myPath = new Path();
         myPath = Shape.Circle(X * cellSize + cellSize / 2, Y * cellSize + cellSize / 2, cellSize * 0.4);
-        myPath.fillColor = 'brack';
+        myPath.fillColor = 'black';
         break;
       case 'white':
         myPath = new Path();
@@ -89,7 +98,7 @@ $(document).ready(function () {
     if (turn % 2 === 0) {
       recerchColor = 'white';
     } else {
-      recerchColor = 'brack';
+      recerchColor = 'black';
     }
     around = [[1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1]];
     for (let i = 0; i < 8; i++) {
@@ -105,7 +114,7 @@ $(document).ready(function () {
   function check_先に自分石があるか(X, Y) {
     let recerchColor;
     if (turn % 2 === 0) {
-      recerchColor = 'brack';
+      recerchColor = 'black';
     } else {
       recerchColor = 'white';
     }
@@ -129,6 +138,26 @@ $(document).ready(function () {
     }
   }
 
+  highlight = function () {
+    for (let i = 0; i < cell数; i++) {
+      for (let j = 0; j < cell数; j++) {
+        if (check(j, i)) {
+          drawRectangle(j * cellSize, i * cellSize, cellSize, cellSize, 'rgb(0,150,0)');
+          highlight_list.push([j, i]);
+        }
+      }
+    }
+    drawReversiline();
+  }
+
+  function highlight_非表示() {
+    for (let i = 0; i < highlight_list.length; i++) {
+      drawRectangle(highlight_list[i][0] * cellSize, highlight_list[i][1] * cellSize, cellSize, cellSize, 'darkgreen');
+    }
+    drawReversiline();
+    highlight_list = [];
+  }
+
   pass = function () {
     for (let i = 0; i < cell数; i++) {
       for (let j = 0; j < cell数; j++) {
@@ -150,47 +179,43 @@ $(document).ready(function () {
   toryo = function () {
     if (confirm("投了しますか？")) {
       finish(true);
-    } else {
-
     }
-
-
   }
 
   function finish(toryo) {
     alert('終局');
     let whiteCounter = 0;
-    let brackCounter = 0;
+    let blackCounter = 0;
     result_list = [];
     for (let i = 0; i < cell数 ** 2; i++) {
       if (stones[i] === 'white') {
         whiteCounter++
-      } else if (stones[i] === 'brack') {
-        brackCounter++
+      } else if (stones[i] === 'black') {
+        blackCounter++
       }
     }
     if (toryo) {
       if (turn % 2 === 0) {
         result_list.push(whiteCounter)
-        result_list.push(brackCounter)
+        result_list.push(blackCounter)
         result_list.push('黒の投了により白の勝ち！');
       } else {
-        result_list.push(brackCounter)
+        result_list.push(blackCounter)
         result_list.push(whiteCounter)
         result_list.push('白の投了により黒の勝ち！')
       }
     } else {
-      if (whiteCounter > brackCounter) {
+      if (whiteCounter > blackCounter) {
         result_list.push(whiteCounter)
-        result_list.push(brackCounter)
+        result_list.push(blackCounter)
         result_list.push('白の勝ち！');
-      } else if (brackCounter > whiteCounter) {
-        result_list.push(brackCounter)
+      } else if (blackCounter > whiteCounter) {
+        result_list.push(blackCounter)
         result_list.push(whiteCounter)
         result_list.push('黒の勝ち！')
       } else {
         result_list.push(whiteCounter)
-        result_list.push(brackCounter)
+        result_list.push(blackCounter)
         result_list.push('引き分け')
       }
     }
@@ -202,17 +227,12 @@ $(document).ready(function () {
     stones.push('None');
   }
 
-  drawRectangle(0, 0, length, length, 'green');
+  drawCell(small, small, 'white', cellSize);
+  drawCell(large, large, 'white', cellSize);
+  drawCell(small, large, 'black', cellSize);
+  drawCell(large, small, 'black', cellSize);
 
-  drawCell(small, small, 'white', cellSize, 'green');
-  drawCell(large, large, 'white', cellSize, 'green');
-  drawCell(small, large, 'brack', cellSize, 'green');
-  drawCell(large, small, 'brack', cellSize, 'green');
-
-  for (let i = 1; i < cell数; i++) {
-    drawLine(i * cellSize, 0, i * cellSize, length, 'brack');
-    drawLine(0, i * cellSize, length, i * cellSize, 'brack');
-  }
+  drawReversiline();
 
   let tool;
   tool = new Tool;
@@ -222,8 +242,9 @@ $(document).ready(function () {
     let Y = Math.floor(event.point.y / cellSize);
     let cellColor;
     if (check(X, Y)) {
+      highlight_非表示();
       if (turn % 2 === 0) {
-        cellColor = 'brack';
+        cellColor = 'black';
         para2.textContent = '後手（白）'
       } else {
         cellColor = 'white'
